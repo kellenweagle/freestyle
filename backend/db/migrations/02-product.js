@@ -1,7 +1,7 @@
 'use strict';
 
 let options = [];
-options.tableName = 'Products';
+options.tableName = 'Product';
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;
 }
@@ -9,7 +9,7 @@ if (process.env.NODE_ENV === 'production') {
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Products', {
+    await queryInterface.createTable('Product', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -28,9 +28,9 @@ module.exports = {
         type: Sequelize.STRING(1000),
         allowNull: false
       },
-      categoryId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
+      category: {
+        type: Sequelize.STRING(100),
+        allowNull: true,
       },
       price: {
         type: Sequelize.DECIMAL,
