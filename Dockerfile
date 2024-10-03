@@ -38,7 +38,6 @@ ENV SCHEMA=${SCHEMA}
 
 # Fill this out on render using internal db url, or external url if running locally on docker
 #schema for render
-ARG DATABASE_URL=postgresql://kellen:1PDOf5lyj4xxNn5dZ5L9OnPZUMPCEzBt@dpg-cruvm4lds78s73a5mdi0-a/freestyle_db_ma51
 ENV DATABASE_URL=${DATABASE_URL}
 
 # Fill this out on render/docker

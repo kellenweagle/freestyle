@@ -33,7 +33,7 @@ export const updateUserThunk = (userId, form) => async (dispatch) => {
             const user = await response.json();
             dispatch(editUser(user));
 
-        } else if (response.status < 500) {
+        } else if (response.status <= 500) {
             const data = await response.json();
             if (data.errors) {
                 return data
