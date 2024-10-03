@@ -1,38 +1,40 @@
 'use strict';
 
-let options = {};
-options.tableName = 'Users';
+let options = [];
+options.tableName = 'Products';
 if (process.env.NODE_ENV === 'production') {
-  options.schema = process.env.SCHEMA;  // define your schema in options object
+  options.schema = process.env.SCHEMA;
 }
 
+/** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable(options, {
+    await queryInterface.createTable('Products', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      username: {
-        type: Sequelize.STRING(30),
+      sellerId: {
+        type: Sequelize.INTEGER,
         allowNull: false,
-        // unique: true
       },
-      email: {
-        type: Sequelize.STRING(256),
+      productName: {
+        type: Sequelize.STRING(100),
         allowNull: false,
-        // unique: true
       },
-      hashedPassword: {
-        type: Sequelize.STRING.BINARY,
+      desc: {
+        type: Sequelize.STRING(1000),
         allowNull: false
       },
-      profileImg: {
-        type: Sequelize.STRING(255),
+      categoryId: {
+        type: Sequelize.INTEGER,
         allowNull: false,
-        defaultValue: ""
+      },
+      price: {
+        type: Sequelize.DECIMAL,
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,
@@ -46,8 +48,8 @@ module.exports = {
       }
     }, options);
   },
-
+  
   async down(queryInterface, Sequelize) {
-    return queryInterface.dropTable(options);
+    await queryInterface.dropTable(options);
   }
 };
