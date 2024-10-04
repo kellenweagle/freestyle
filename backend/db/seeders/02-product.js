@@ -1,9 +1,9 @@
 'use strict';
 
-const {Products, Sequelize} = require('../models');
+const {Product, Sequelize} = require('../models');
 
 let options = {};
-options.tableName = 'Product';
+options.tableName = 'Products';
 
 if(process.env.NODE_ENV === 'production'){
   options.schema = process.env.SCHEMA;
@@ -13,9 +13,10 @@ module.exports = {
 
 
     up: async (queryInterface, Sequelize) => {
-      options.tableName = "Product";
+      options.tableName = "Products";
       return queryInterface.bulkInsert(options, [
         {
+          id: 1,
           sellerId: 1,
           productName: 'Demo Product',
           desc: 'This is a test',

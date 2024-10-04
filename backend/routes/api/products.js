@@ -2,7 +2,7 @@ const express = require('express');
 // const { check } = require('express-validator');
 // const { handleValidationErrors } = require('../../utils/validation');
 
-const { Product, ProductImages } = require('../../db/models');
+const { Product, ProductImage } = require('../../db/models');
 
 
 const router = express.Router();
@@ -11,7 +11,7 @@ router.get('/', async(req, res, next) => {
   try {
     const products = await Product.findAll({
       include: [
-        {model: ProductImages}
+        {model: ProductImage}
       ]
     });
 

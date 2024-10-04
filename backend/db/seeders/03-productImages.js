@@ -1,6 +1,6 @@
 'use strict';
 
-const {ProductImages, Sequelize} = require('../models');
+const {ProductImage, Sequelize} = require('../models');
 const bcrypt = require('bcryptjs');
 
 
