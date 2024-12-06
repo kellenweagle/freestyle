@@ -10,7 +10,7 @@ function Navigation() {
   return (
     <ul>
       <li>
-        <NavLink to="/">Home</NavLink>
+        {/* <NavLink to="/"><Logo /></NavLink> */}
       </li>
 
       <li>

@@ -3,38 +3,14 @@ import { updateUserThunk } from '../../redux/session';
 import { useDispatch, useSelector } from 'react-redux';
 import { Product } from './Product';
 import { getProductThunk } from '../../redux/product';
+import './Splash.css'
 
 
 const Splash = () => {
-  const dummyProducts = [
-    {
-      id: 1,
-      productName: 'Demo Product',
-      desc: "Dummy Desc",
-      category: "demo",
-      price: 20,
-      img: 'https://media-photos.depop.com/b1/43131288/2055295605_a680ccaa2e2344649fda98eed236ea93/P0.jpg'
-    },
-    {
-      id: 2,
-      productName: 'Dummy Product',
-      desc: "Dummy Desc",
-      category: "demo",
-      price: 30,
-      img: 'https://media-photos.depop.com/b1/43131288/2055295605_a680ccaa2e2344649fda98eed236ea93/P0.jpg'
-    },
-    {
-      id: 3,
-      productName: 'Demo Dummy Product',
-      desc: "Dummy Desc",
-      category: "demo",
-      price: 40,
-      img: 'https://media-photos.depop.com/b1/43131288/2055295605_a680ccaa2e2344649fda98eed236ea93/P0.jpg'
-    },
-  ]
   const dispatch = useDispatch();
   const user = useSelector((state) => state.session.user)
   const productsState = useSelector((state) => state.productsState.products)
+  console.log(productsState, "test")
 
   //image url to send to aws
   const [imgUrl, setImgUrl] = useState("");
@@ -83,7 +59,7 @@ const Splash = () => {
 
   return (
     <div>
-        <h1>Welcome</h1>
+        <img className='banner' src='https://64.media.tumblr.com/d1bbcf28f97cc3a0406722b2b1f24631/1f1d2a8945d240e3-2f/s540x810/9e37d5683da3cbb4d98d3b1a865861a66326dee4.pnj' />
         <form onSubmit={handleSubmit}>
           <div>
             {showUpload && (

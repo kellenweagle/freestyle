@@ -17,12 +17,17 @@ const getProducts = (products) => ({
 
 export const getProductThunk = () => async (dispatch) => {
     try{
-        const response = await csrfFetch(`/api/products/`);
+        console.log("we are in the thunk")
+        const response = await csrfFetch('/api/products');
+        console.log(response, "looking for response")
         if (response.ok) {
+            console.log(response, "response is okay")
             const products = await response.json();
             dispatch(getProducts(products));
+            return products
         } else if (response.status <= 500) {
             const data = await response.json();
+            console.log("it bad")
             if (data.errors) {
                 return data
             } else {
@@ -40,16 +45,14 @@ const initialState = { products: null };
 function productsReducer(state = initialState, action) {
     let newState;
     switch (action.type) {
-        // case SET_USER:
-        //     return { ...state, user: action.payload };
-        // case REMOVE_USER:
-        //     return { ...state, user: null };
         case GET_PRODUCTS:
+          console.log("get_products is being triggered")
           newState = {...state}
           newState.products = action.payload;
           return newState;
         default:
-            return state;
+          console.log("default is being triggered")
+          return state;
     }
 }
 

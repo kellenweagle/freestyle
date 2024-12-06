@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User } = require('../../db/models');
+const { User, Reviews } = require('../../db/models');
 
 const router = express.Router();
 
@@ -63,6 +63,17 @@ router.get('/', (req, res) => {
         });
     } else return res.json({ user: null });
 });
+
+router.get('/:userId/reviews', async(req, res, next) => {
+    try {
+      const reviews = await Reviews.findAll();
+  
+      res.status(200);
+      return res.json(reviews);
+    } catch (e) {
+      return next(e);
+    }
+  })
 
 
 module.exports = router;
