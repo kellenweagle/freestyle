@@ -37,7 +37,7 @@ module.exports = {
           price: 35.00
         },
         {
-          sellerId: 2,
+          sellerId: 1,
           productName: 'The Mountain Men\'s Blue and Grey T-shirt',
           desc: 'The Mountain Big Cats Jungle Tee',
           category: 'Shirt',
@@ -51,21 +51,21 @@ module.exports = {
           price: 15.00
         },
         {
-          sellerId: 2,
+          sellerId: 1,
           productName: 'SO Clothing Women\'s Blue and Navy Skirt',
           desc: 'Y2K Low Rise Mini Skirt 11',
           category: 'Skirt',
           price: 15.00
         },
         {
-          sellerId: 3,
+          sellerId: 1,
           productName: 'The North Face Women\'s Green Jacket',
           desc: 'Large green North Face fleece jacket',
           category: 'Jacket',
           price: 18.00
         },
         {
-          sellerId: 3,
+          sellerId: 1,
           productName: 'Old Navy Women\'s Blue and Navy Dress',
           desc: 'Large Old Navy denim dress!',
           category: 'Dress',
@@ -79,21 +79,21 @@ module.exports = {
           price: 10.00
         },
         {
-          sellerId: 4,
+          sellerId: 1,
           productName: 'White Stag Women\'s T-shirt',
           desc: 'A staple tee that is 100% cotton and ribbed. You can not go wrong with this one, neutral cream colored and textured.',
           category: 'Shirt',
           price: 15.00
         },
         {
-          sellerId: 4,
+          sellerId: 1,
           productName: 'Women\'s Cream and Pink Vest',
           desc: 'Pastel cream sleeveless knit / vest. Watercolor floral, paisley, and leopard design - because why choose? Looks cute with shirts or trousers, or even a collared shirt underneath.',
           category: 'Shirt',
           price: 20.00
         },
         {
-          sellerId: 4,
+          sellerId: 1,
           productName: 'Women\'s T-shirt',
           desc: '100% cotton yellow tee. Potted plants with 🇺🇸 across. In love with this color and the graphic.',
           category: 'Shirt',

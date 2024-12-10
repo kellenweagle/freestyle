@@ -23,7 +23,7 @@ const Splash = () => {
 
   useEffect(() => {
     const getData = async() => {
-      const res = await dispatch(getProductThunk()) //handle error messages dynamically
+      await dispatch(getProductThunk()) //handle error messages dynamically
       // setProducts(productsState);
       setIsLoaded(true);
     } 
@@ -59,7 +59,7 @@ const Splash = () => {
 
   return (
     <div>
-        <img className='banner' src='https://64.media.tumblr.com/d1bbcf28f97cc3a0406722b2b1f24631/1f1d2a8945d240e3-2f/s540x810/9e37d5683da3cbb4d98d3b1a865861a66326dee4.pnj' />
+        {/* <img className='banner' src='https://64.media.tumblr.com/d1bbcf28f97cc3a0406722b2b1f24631/1f1d2a8945d240e3-2f/s540x810/9e37d5683da3cbb4d98d3b1a865861a66326dee4.pnj' /> */}
         <form onSubmit={handleSubmit}>
           <div>
             {showUpload && (

@@ -4,5 +4,5 @@
 # TODO(kellen): add logging
 
 # This runs commands from the root package.json and it starts the frontend and backend in the same terminal :)
-npm run build
+npm run start
 npm run run
