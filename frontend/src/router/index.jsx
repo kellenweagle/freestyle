@@ -5,6 +5,7 @@ import SignupFormPage from '../components/SignupFormPage';
 import Layout from './Layout';
 import Splash from '../components/Splash';
 import PageNotFound from '../components/PageNotFound/PageNotFound';
+import CreateProductForm from '../components/CreateProductForm/CreateProductForm';
 export const router = createBrowserRouter([
 
   {
@@ -21,6 +22,10 @@ export const router = createBrowserRouter([
       {
         path: "signup",
         element: <SignupFormPage />,
+      },
+      {
+        path: "/products",
+        element: <CreateProductForm />,
       },
       {
         path: '/*',

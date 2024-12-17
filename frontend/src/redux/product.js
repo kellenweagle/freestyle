@@ -2,8 +2,8 @@ import { csrfFetch } from './csrf';
 
 //Constants
 // const SET_USER = 'session/setUser';
+const CREATE_PRODUCT = "product/createProduct"
 const GET_PRODUCTS = 'products/all';
-
 const DELETE_PRODUCT = "product/deleteProduct"
 
 
@@ -21,6 +21,12 @@ const deleteProduct = (deletedProduct) => ({
     type: DELETE_PRODUCT,
     payload: deletedProduct
   })
+
+  
+const createProduct = (product) => ({
+  type: CREATE_PRODUCT,
+  payload: product
+})
 
 export const getProductThunk = () => async (dispatch) => {
     try{
@@ -47,6 +53,27 @@ export const getProductThunk = () => async (dispatch) => {
     }
 }
 
+export const createProductThunk = (productForm) => async(dispatch) => {
+  try {
+    const options = {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(productForm)
+    }
+
+    const res = await csrfFetch("/api/products", options)
+    if(res.ok){
+      const data = await res.json();
+      dispatch(createProduct(data))
+      return data;
+    } else{
+      throw res
+    }
+  } catch(e) {
+    return e;
+  }
+}
+
 export const deleteProductThunk = (product) => async(dispatch) => {
     try {
             const options = {
@@ -59,7 +86,7 @@ export const deleteProductThunk = (product) => async(dispatch) => {
             console.log(res)
             if(res.ok){
                 const data = await res.json();
-                dispatch(deleteSpot(data));
+                dispatch(deleteProduct(data));
               return data;
             } else{
                 throw res;
@@ -85,6 +112,13 @@ function productsReducer(state = initialState, action) {
           newState = {...state}
           newState.products = action.payload;
           return newState;
+
+        case CREATE_PRODUCT: {
+          newState = {...state};
+          newState.products = [action.payload, ...newState.products];
+          newState.byId = {...newState.byId, [action.payload.id]: action.payload}
+          return newState
+        }
         
         case DELETE_PRODUCT: {
           newState = {...state};

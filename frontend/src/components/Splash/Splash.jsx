@@ -61,7 +61,7 @@ const Splash = () => {
     <div>
         {/* <img className='banner' src='https://64.media.tumblr.com/d1bbcf28f97cc3a0406722b2b1f24631/1f1d2a8945d240e3-2f/s540x810/9e37d5683da3cbb4d98d3b1a865861a66326dee4.pnj' /> */}
         <form onSubmit={handleSubmit}>
-          <div>
+          {/* <div>
             {showUpload && (
               <label htmlFor='file-upload'> Select From Computer
                 <input
@@ -82,7 +82,7 @@ const Splash = () => {
                 <button>Change Profile</button>
               </div>
             )}
-          </div>
+          </div> */}
         </form>
         <div style={{display: 'flex', }}>
           {productsState.length > 0 ? productsState.map((product) => (
