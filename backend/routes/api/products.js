@@ -22,6 +22,66 @@ router.get('/', async(req, res, next) => {
   }
 })
 
+// Create a product
+router.post('/', requireAuth, async(req, res, next) => {
+  try {
+
+    const {
+      productName,
+      desc,
+      category,
+      price,
+      previewImage,
+      image1,
+      image2,
+      image3,
+    } = req.body;
+
+    const { user } = req;
+
+    if(!user) {
+        const error = new CustomError ("Forbidden", 403);
+        throw error
+    }
+
+    const newProduct = await Product.create({
+        sellerId: user.id,
+        productName,
+        desc,
+        category,
+        price
+      })
+
+    if(newProduct) {
+      let options = {};
+      options.tableName = "ProductImages";
+
+      if (process.env.NODE_ENV === 'production') {
+        options.schema = process.env.SCHEMA;  // define your schema in options object
+      }
+      const productImages = await ProductImage.bulkCreate([
+        { productId: newProduct.id, url: previewImage, preview: true },
+        { productId: newProduct.id, url: image1, preview: false },
+        { productId: newProduct.id, url: image2, preview: false },
+        { productId: newProduct.id, url: image3, preview: false },
+      ], options)
+
+      let formattedNewProduct = {
+        "id": newProduct.id,
+        "sellerId": newProduct.sellerId,
+        "productName": newProduct.productName,
+        "desc": newProduct.desc,
+        "category": newProduct.category,
+        "price": newProduct.price,
+        "previewImage": newProduct.previewImage
+      }
+      return res.status(201).json(formattedNewProduct)
+    }
+  } catch(e) {
+    next(e)
+  }
+})
+
 // Delete a product
 router.delete('/:productId', requireAuth, async(req, res, next) => {
   try {
