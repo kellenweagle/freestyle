@@ -18,8 +18,7 @@ function CreateProductForm() {
     previewImage: "",
     image1: "",
     image2: "",
-    image3: "",
-    description: ""
+    image3: ""
   });
 
   // CUSTOM FUNCS 

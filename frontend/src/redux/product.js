@@ -1,34 +1,34 @@
 import { csrfFetch } from './csrf';
 
-//Constants
-// const SET_USER = 'session/setUser';
-const CREATE_PRODUCT = "product/createProduct"
+// Constants
+const CREATE_PRODUCT = "product/createProduct";
 const GET_PRODUCTS = 'products/all';
-const DELETE_PRODUCT = "product/deleteProduct"
+const DELETE_PRODUCT = "product/deleteProduct";
+const UPDATE_PRODUCT = "product/updateProduct";
 
-
-// const setUser = (user) => ({
-//     type: SET_USER,
-//     payload: user
-// });
-
+// Action Creators
 const getProducts = (products) => ({
   type: GET_PRODUCTS,
-  payload: products
-})
+  payload: products,
+});
 
 const deleteProduct = (deletedProduct) => ({
-    type: DELETE_PRODUCT,
-    payload: deletedProduct
-  })
+  type: DELETE_PRODUCT,
+  payload: deletedProduct,
+});
 
-  
 const createProduct = (product) => ({
   type: CREATE_PRODUCT,
-  payload: product
-})
+  payload: product,
+});
 
-export const getProductThunk = () => async (dispatch) => {
+const updateProduct = (product) => ({
+  type: UPDATE_PRODUCT,
+  payload: product,
+});
+
+// Thunks
+export const getProductsThunk = () => async (dispatch) => {
     try{
         console.log("we are in the thunk")
         const response = await csrfFetch('/api/products');
@@ -53,96 +53,130 @@ export const getProductThunk = () => async (dispatch) => {
     }
 }
 
-export const createProductThunk = (productForm) => async(dispatch) => {
+export const createProductThunk = (productForm) => async (dispatch) => {
   try {
     const options = {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(productForm)
-    }
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(productForm),
+    };
 
-    const res = await csrfFetch("/api/products", options)
-    if(res.ok){
+    const res = await csrfFetch("/api/products", options);
+    if (res.ok) {
       const data = await res.json();
-      dispatch(createProduct(data))
+      dispatch(createProduct(data));
       return data;
-    } else{
-      throw res
+    } else {
+      throw res;
     }
-  } catch(e) {
+  } catch (e) {
     return e;
   }
-}
+};
 
-export const deleteProductThunk = (product) => async(dispatch) => {
-    try {
-            const options = {
-                method: 'DELETE',
-                header: {'Content-Type': 'application/json'},
-                body: JSON.stringify(product)
-            };
-  
-            const res = await csrfFetch(`/api/products/${product.id}`, options);
-            console.log(res)
-            if(res.ok){
-                const data = await res.json();
-                dispatch(deleteProduct(data));
-              return data;
-            } else{
-                throw res;
-            }
-  
-    } catch (error) {
-        return error;
+export const deleteProductThunk = (product) => async (dispatch) => {
+  try {
+    const options = {
+      method: 'DELETE',
+      header: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(product),
+    };
+
+    const res = await csrfFetch(`/api/products/${product.id}`, options);
+    if (res.ok) {
+      const data = await res.json();
+      dispatch(deleteProduct(data));
+      return data;
+    } else {
+      throw res;
     }
+  } catch (error) {
+    return error;
   }
+};
 
+export const updateProductThunk = (id, updatedProductForm) => async (dispatch) => {
+  try {
+    const res = await csrfFetch(`/api/products/${id}/update`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(updatedProductForm),
+    });
+    
+    if (res.ok) {
+      const updatedProduct = await res.json();
+      dispatch(updateProduct(updatedProduct));
+      return updatedProduct;
+    } else {
+      throw res;
+    }
+  } catch (e) {
+    console.error(e);
+    return e;
+  }
+};
+
+// Reducer
 const initialState = { 
-    products: null,
-    userProducts: null,
-    byId: {}
- };
+  products: [],
+  userProducts: [],
+  byId: {}
+};
 
 function productsReducer(state = initialState, action) {
-    let newState;
-    switch (action.type) {
-
-        case GET_PRODUCTS:
-          console.log("get_products is being triggered")
-          newState = {...state}
-          newState.products = action.payload;
-          return newState;
-
-        case CREATE_PRODUCT: {
-          newState = {...state};
-          newState.products = [action.payload, ...newState.products];
-          newState.byId = {...newState.byId, [action.payload.id]: action.payload}
-          return newState
-        }
-        
-        case DELETE_PRODUCT: {
-          newState = {...state};
-    
-          const filteredProducts = newState.products.filter((product)=> {
-            return product.id !== action.payload.id
-          })
-          const filteredUserProducts = newState.userProducts.filter((product)=> {
-            return product.id !== action.payload.id
-          })
-           newState.products = filteredProducts;
-           newState.userProducts = filteredUserProducts;
-    
-           const newById = {...newState.byId};
-           delete newById[action.payload.id];
-           newState.byId = newById;
-    
-          return newState;
-          }
-
-        default:
-          console.log("default is being triggered")
-          return state;
+  let newState;
+  switch (action.type) {
+    case GET_PRODUCTS: {
+      newState = { ...state };
+      newState.products = action.payload;
+      newState.byId = action.payload.reduce((acc, product) => {
+        acc[product.id] = product;
+        return acc;
+      }, {});
+      return newState;
     }
+
+    case CREATE_PRODUCT: {
+      newState = { ...state };
+      newState.products = [action.payload, ...newState.products];
+      newState.byId[action.payload.id] = action.payload;
+      return newState;
+    }
+
+    case DELETE_PRODUCT: {
+      newState = { ...state };
+      newState.products = newState.products.filter(
+        (product) => product.id !== action.payload.id
+      );
+      newState.userProducts = newState.userProducts?.filter(
+        (product) => product.id !== action.payload.id
+      );
+      delete newState.byId[action.payload.id];
+      return newState;
+    }
+
+    case UPDATE_PRODUCT: {
+      newState = { ...state };
+      const updatedProducts = newState.products.map((product) =>
+        product.id === action.payload.id ? action.payload : product
+      );
+      newState.products = updatedProducts;
+
+      if (newState.userProducts) {
+        const updatedUserProducts = newState.userProducts.map((product) =>
+          product.id === action.payload.id ? action.payload : product
+        );
+        newState.userProducts = updatedUserProducts;
+      }
+
+      newState.byId = { ...newState.byId, [action.payload.id]: action.payload };
+
+      return newState;
+    }
+
+    default:
+      return state;
+  }
 }
 
 export default productsReducer;

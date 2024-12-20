@@ -82,6 +82,52 @@ router.post('/', requireAuth, async(req, res, next) => {
   }
 })
 
+// Update a Product
+router.put('/:id/update', requireAuth, async(req, res, next) => {
+  try {
+    const { productName, desc, category, price, previewImage, image1 } = req.body;
+    
+    const { user } = req;
+    const id = req.params.id;
+
+    const productToUpdate = await Product.findByPk(id);
+
+    if (!productToUpdate) {
+      const error = new CustomError("Product couldn't be found", 404);
+      throw error;
+    }
+
+    if (user.id !== 1) {
+      const error = new CustomError("Forbidden", 403);
+      throw error;
+    }
+
+    const updatedProduct = await productToUpdate.update({
+      sellerId: user.id,
+      productName,
+      desc,
+      category,
+      price,
+      previewImage
+    });
+
+    let formatUpdatedProduct = {
+      "id": updatedProduct.id,
+      "sellerId": updatedProduct.sellerId,
+      "productName": updatedProduct.productName,
+      "desc": updatedProduct.desc,
+      "category": updatedProduct.category,
+      "price": updatedProduct.price,
+      "previewImage": updatedProduct.previewImage
+    };
+
+    res.json(formatUpdatedProduct);
+
+  } catch (e) {
+    next(e);
+  }
+});
+
 // Delete a product
 router.delete('/:productId', requireAuth, async(req, res, next) => {
   try {

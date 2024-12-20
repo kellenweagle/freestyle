@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { updateUserThunk } from '../../redux/session';
 import { useDispatch, useSelector } from 'react-redux';
 import { Product } from './Product';
-import { getProductThunk } from '../../redux/product';
+import { getProductsThunk } from '../../redux/product';
 import './Splash.css'
 
 
@@ -23,7 +23,7 @@ const Splash = () => {
 
   useEffect(() => {
     const getData = async() => {
-      await dispatch(getProductThunk()) //handle error messages dynamically
+      await dispatch(getProductsThunk()) //handle error messages dynamically
       // setProducts(productsState);
       setIsLoaded(true);
     } 
