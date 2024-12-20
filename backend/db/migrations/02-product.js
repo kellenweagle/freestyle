@@ -2,6 +2,7 @@
 
 let options = [];
 options.tableName = 'Products';
+
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;
 }
@@ -26,7 +27,7 @@ module.exports = {
       },
       desc: {
         type: Sequelize.STRING(1000),
-        allowNull: false
+        allowNull: false,
       },
       category: {
         type: Sequelize.STRING(100),
@@ -35,6 +36,22 @@ module.exports = {
       price: {
         type: Sequelize.DECIMAL,
         allowNull: false,
+      },
+      previewImage: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      image1: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      image2: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      image3: {
+        type: Sequelize.STRING,
+        allowNull: true,
       },
       createdAt: {
         allowNull: false,
@@ -48,7 +65,7 @@ module.exports = {
       }
     }, options);
   },
-  
+
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable(options);
   }

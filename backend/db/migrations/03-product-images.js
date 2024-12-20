@@ -2,11 +2,11 @@
 
 let options = [];
 options.tableName = 'ProductImages';
+
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;
 }
 
-// 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -18,20 +18,22 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       productId: {
-        allowNull: false,
         type: Sequelize.INTEGER,
-        references: {model: 'Products'},
-        onDelete: 'CASCADE'
+        allowNull: false,
+        references: {
+          model: 'Products',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
       },
       url: {
-        allowNull: false,
         type: Sequelize.STRING,
-        defaultValue: ''
+        allowNull: false,
       },
       previewImg: {
-        allowNull: false,
         type: Sequelize.BOOLEAN,
-        defaultValue: false
+        allowNull: false,
+        defaultValue: false,
       },
       createdAt: {
         allowNull: false,
@@ -45,7 +47,7 @@ module.exports = {
       }
     }, options);
   },
-  
+
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable(options);
   }
