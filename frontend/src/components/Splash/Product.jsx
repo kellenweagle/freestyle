@@ -1,16 +1,23 @@
 import React from 'react'
 import './Product.css'
 import { useDispatch } from 'react-redux';
-import { deleteProductThunk, getProductThunk } from '../../redux/product';
+import { deleteProductThunk, getProductsThunk } from '../../redux/product';
+import { useNavigate } from 'react-router-dom';
 
 
 export const Product = ({product}) => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  const updateProduct = (e) => {
+    e.preventDefault();
+    navigate(`/products/${product.id}/update`);
+  }
 
   const handleDelete = async (e) => {
     e.preventDefault();
     await dispatch(deleteProductThunk(product))
-    await dispatch(getProductThunk())
+    await dispatch(getProductsThunk())
   };
 
   return (
@@ -19,7 +26,7 @@ export const Product = ({product}) => {
       <img src={product.ProductImages[0].url} alt={product.desc} />
       <p>{product.desc}</p>
       <p>${product.price}</p>
-      <button>Update</button>
+      <button onClick={updateProduct}>Update</button>
       <button onClick={handleDelete}>Delete</button>
     </div>
   )

@@ -6,6 +6,7 @@ import Layout from './Layout';
 import Splash from '../components/Splash';
 import PageNotFound from '../components/PageNotFound/PageNotFound';
 import CreateProductForm from '../components/CreateProductForm/CreateProductForm';
+import UpdateProduct from '../components/UpdateProduct/UpdateProduct';
 export const router = createBrowserRouter([
 
   {
@@ -26,6 +27,10 @@ export const router = createBrowserRouter([
       {
         path: "/products",
         element: <CreateProductForm />,
+      },
+      {
+        path: "/products/:id/update",
+        element: <UpdateProduct />,
       },
       {
         path: '/*',
