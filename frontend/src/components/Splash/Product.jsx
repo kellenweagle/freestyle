@@ -20,10 +20,15 @@ export const Product = ({product}) => {
     await dispatch(getProductsThunk())
   };
 
+  console.log(product)
+
   return (
     <div className='product_card'>
       <h1>{product.productName}</h1>
-      <img src={product.ProductImages[0].url} alt={product.desc} />
+      <img src={product.previewImage} alt={product.desc} />
+      <img src={product.image1} alt={product.desc} />
+      <img src={product.image2} alt={product.desc} />
+      <img src={product.image3} alt={product.desc} />
       <p>{product.desc}</p>
       <p>${product.price}</p>
       <button onClick={updateProduct}>Update</button>

@@ -11,8 +11,6 @@ function UpdateProduct() {
   const { id } = useParams();
   const product = useSelector((state) => state.productsState.byId[id]);
 
-
-
   const categories = ["Tops", "Bottoms", "Coats and Jackets", "Footwear"];
 
   const [form, setForm] = useState({
@@ -60,8 +58,8 @@ function UpdateProduct() {
     e.preventDefault();
     const res = await dispatch(updateProductThunk(id, form));
     if (res?.ok || res?.ok === undefined) {
-      console.log("update successful")
-      navigate(`/`);
+      console.log("update successful");
+      navigate(`/products/${id}`);
     }
   };
 
@@ -93,7 +91,6 @@ function UpdateProduct() {
           value={form.image3}
           onChange={(e) => setForm({ ...form, image3: e.target.value })}
         />
-        
       </div>
       <div className="section-two">
         <h3>Description</h3>
@@ -140,4 +137,3 @@ function UpdateProduct() {
 }
 
 export default UpdateProduct;
-
