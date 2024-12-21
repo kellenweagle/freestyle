@@ -1,6 +1,6 @@
 'use strict';
 
-let options = [];
+let options = {};
 options.tableName = 'ProductImages';
 
 if (process.env.NODE_ENV === 'production') {
