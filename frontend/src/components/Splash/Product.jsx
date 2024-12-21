@@ -19,6 +19,8 @@ export const Product = ({product}) => {
     navigate(`/products/${product.id}`)
   }
 
+  console.log("hi")
+
   const handleDelete = async (e) => {
     e.preventDefault();
     await dispatch(deleteProductThunk(product))
