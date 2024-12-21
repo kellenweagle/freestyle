@@ -20,8 +20,6 @@ export const Product = ({product}) => {
     await dispatch(getProductsThunk())
   };
 
-  console.log(product)
-
   return (
     <div className='product_card'>
       <h1>{product.productName}</h1>
