@@ -14,6 +14,11 @@ export const Product = ({product}) => {
     navigate(`/products/${product.id}/update`);
   }
 
+  const productPage = (e) => {
+    e.preventDefault();
+    navigate(`/products/${product.id}`)
+  }
+
   const handleDelete = async (e) => {
     e.preventDefault();
     await dispatch(deleteProductThunk(product))
@@ -22,12 +27,7 @@ export const Product = ({product}) => {
 
   return (
     <div className='product_card'>
-      <h1>{product.productName}</h1>
-      <img src={product.previewImage} alt={product.desc} />
-      <img src={product.image1} alt={product.desc} />
-      <img src={product.image2} alt={product.desc} />
-      <img src={product.image3} alt={product.desc} />
-      <p>{product.desc}</p>
+      <img onClick={productPage} src={product.previewImage} alt={product.desc} />
       <p>${product.price}</p>
       <button onClick={updateProduct}>Update</button>
       <button onClick={handleDelete}>Delete</button>
