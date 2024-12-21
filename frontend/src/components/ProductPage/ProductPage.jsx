@@ -4,9 +4,9 @@ import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
 export const ProductPage = () => {
-  const dispatch = useDispatch();
   const { id } = useParams()
   const product = useSelector((state) => state.productsState.byId[id])
+
 
   console.log(product)
   return (
@@ -18,8 +18,8 @@ export const ProductPage = () => {
     <img src={product.image3} alt={product.desc} />
     <p>{product.desc}</p>
     <p>${product.price}</p>
-    {/* <button onClick={updateProduct}>Update</button>
-    <button onClick={handleDelete}>Delete</button> */}
+    <button /*onClick={updateProduct}*/ >Update</button>
+    <button /*onClick={handleDelete}*/>Delete</button>
   </div>
   )
 }
