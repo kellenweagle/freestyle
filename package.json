@@ -11,8 +11,7 @@
     "start-backend": "npm start --prefix backend",
     "start-frontend-dev": "npm run --prefix frontend dev",
     "start-frontend-prod": "npm run --prefix frontend start",
-    "build": "npm run --prefix backend build",
-    "deploy": "docker image push kellenweagle/freestylecapstone"
+    "build": "npm run --prefix backend build"
   },
   "keywords": [],
   "author": "",

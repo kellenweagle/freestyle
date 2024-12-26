@@ -1,8 +1,20 @@
 'use strict';
 
+const {ProductImages, Sequelize} = require('../models');
+const bcrypt = require('bcryptjs');
+
+
+let options = {};
+options.tableName = 'ProductImages';
+
+if(process.env.NODE_ENV === 'production'){
+  options.schema = process.env.SCHEMA;
+}
+
+
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.bulkInsert('ProductImages', [
+    await queryInterface.bulkInsert(options, [
       {
         productId: 1, 
         url: 'https://media-photos.depop.com/b1/30825655/2361047634_07d5bfe673c94b2faa3224ced251201b/P0.jpg',
@@ -147,6 +159,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('ProductImages', null, {});
+    await queryInterface.bulkDelete(options, null, {});
   }
 };
