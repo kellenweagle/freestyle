@@ -154,7 +154,7 @@ router.delete('/:productId', requireAuth, async(req, res, next) => {
   try {
 
     const id = req.params.productId
-    console.log(id)
+
     const user = req.user
     const productToDelete = await Product.findByPk(id)
 

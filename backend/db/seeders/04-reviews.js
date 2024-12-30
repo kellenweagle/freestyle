@@ -18,18 +18,18 @@ module.exports = {
       options.tableName = "Reviews";
       return queryInterface.bulkInsert(options, [
         {
-          userId: 1,
+          userId: 2,
           review: 'Loved the sweater I got!',
           stars: 5,
         },
         {
-          userId: 1,
+          userId: 3,
           review: 'Item exactly as described! and super fast shipping',
           stars: 5,
         },
         {
-          userId: 1,
-          review: 'The shipping was fast and seller is great',
+          userId: 4,
+          review: 'The shipping was fast and item is great',
           stars: 4,
         },
         {
@@ -49,17 +49,17 @@ module.exports = {
         },
         {
           userId: 3,
-          review: 'Seller never shipped & never answered messages after I bought an item. Had to reach out to depop to get a refund.',
-          stars: 1,
+          review: 'Item was just as listed, thanks!',
+          stars: 4,
         },
         {
           userId: 3,
-          review: 'Great prices, great communication from the seller and fast shipping! I would highly recommend this seller.',
+          review: 'Great prices, great communication from the store and fast shipping! I would highly recommend them.',
           stars: 5,
         },
         {
           userId: 3,
-          review: 'Very quick shipping and nice seller, thanks!',
+          review: 'Very quick shipping, thanks!',
           stars: 4,
         },
         {
@@ -69,13 +69,8 @@ module.exports = {
         },
         {
           userId: 4,
-          review: 'Amazing seller. Item got here in 3 days after ordering. Almost faster than Amazon, haha!',
+          review: 'Amazing! Item got here in 3 days after ordering. Almost faster than Amazon, haha!',
           stars: 5,
-        },
-        {
-          userId: 4,
-          review: 'He did communicate with me but it took so long to ship that I had to cancel the order because I was going to be out of town and he never refunded me.',
-          stars: 2,
         },
       ], {})
     },

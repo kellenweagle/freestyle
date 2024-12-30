@@ -62,8 +62,9 @@ function LoginFormModal() {
         <button
             className='demo-user'
             onClick={handleDemoUser}
-          >Demo User</button>
+          >Demo Admin</button>
       </form>
+      <p>*For admin, use Demo</p>
     </>
   );
 }

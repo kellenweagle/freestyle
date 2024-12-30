@@ -12,7 +12,7 @@ function Navigation() {
     <div className="nav-container">
       <Logo />
       <div className="nav-right">
-        <NavLink to="/products">Post New Product</NavLink>
+      {user !== null ? user.id === 1 ? <NavLink to="/products">Post New Product</NavLink> : null : null}
         <ul>
           <li>
             <ProfileButton />

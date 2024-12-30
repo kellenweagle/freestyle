@@ -1,49 +1,120 @@
 import { csrfFetch } from './csrf';
 
 //Constants
-// const SET_USER = 'session/setUser';
 const GET_REVIEWS = 'reviews/all';
-
-
-// const setUser = (user) => ({
-//     type: SET_USER,
-//     payload: user
-// });
+const CREATE_REVIEWS = 'reviews/create'
+const DELETE_REVIEWS = 'reviews/delete'
 
 const getReviews = (reviews) => ({
   type: GET_REVIEWS,
-  payload: products
+  payload: reviews
 })
 
-export const getReviewsThunk = (id) => async (dispatch) => {
-  try {
-    const res = await csrfFetch(`/api/products/${id}/reviews`);
-    if(res.ok) {
-      const data = await res.json();
-      await dispatch(getReviews(data))
-      return data;
+const createReviews = (review) => ({
+  type: CREATE_REVIEWS,
+  payload: review,
+});
 
+const deleteReview = (deletedReview) => ({
+  type: DELETE_REVIEWS,
+  payload: deletedReview,
+});
+
+
+export const getReviewsThunk = () => async (dispatch) => {
+    try{
+      console.log("we are in the thunk for review")
+        const response = await csrfFetch('/api/reviews');
+        if (response.ok) {
+            const reviews = await response.json();
+            dispatch(getReviews(reviews));
+            return reviews
+        } else if (response.status <= 500) {
+            const data = await response.json();
+            if (data.errors) {
+                return data
+            } else {
+                throw new Error('An error occured. Please try again.')
+            }
+        }
+        return response;
+    } catch(e){
+        return e
+    }
+}
+
+export const createReviewThunk = (reviewForm) => async (dispatch) => {
+  try {
+    const options = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(reviewForm),
+    };
+
+    const res = await csrfFetch("/api/reviews", options);
+    if (res.ok) {
+      const data = await res.json();
+      dispatch(createReviews(data));
+      return data;
     } else {
       throw res;
     }
-  } catch(e) {
+  } catch (e) {
     return e;
   }
-}
+};
 
-const initialState = { reviews: null };
+export const deleteReviewThunk = (review) => async (dispatch) => {
+  try {
+    const options = {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(review),
+    };
+    const res = await csrfFetch(`/api/reviews/${review.id}`, options);
+    console.log("we are in the delete review thunk")
+    if (res.ok) {
+      const data = await res.json();
+      dispatch(deleteReview(data));
+      return data;
+    } else {
+      throw res;
+    }
+  } catch (error) {
+    return error;
+  }
+};
+
+const initialState = { reviews: [], byId: {} };
 
 function reviewsReducer(state = initialState, action) {
     let newState;
     switch (action.type) {
-        // case SET_USER:
-        //     return { ...state, user: action.payload };
-        // case REMOVE_USER:
-        //     return { ...state, user: null };
         case GET_REVIEWS:
           newState = {...state}
           newState.reviews = action.payload;
           return newState;
+
+        case CREATE_REVIEWS: {
+          newState = { ...state };
+          newState.reviews = [action.payload, ...newState.reviews];
+          newState.byId[action.payload.id] = action.payload;
+          return newState; 
+        }
+
+        case DELETE_REVIEWS: {
+          newState = { ...state };
+          newState.reviews = newState.reviews.filter(
+            (review) => review.id !== action.payload.id
+          );
+          newState.userReviews = newState.userReviews?.filter(
+            (review) => review.id !== action.payload.id
+          );
+          delete newState.byId[action.payload.id];
+          return newState;
+        }
+
+        
         default:
             return state;
     }

@@ -3,11 +3,12 @@ import './Product.css'
 import { useDispatch } from 'react-redux';
 import { deleteProductThunk, getProductsThunk } from '../../redux/product';
 import { useNavigate } from 'react-router-dom';
-
+import { useSelector } from 'react-redux';
 
 export const Product = ({product}) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const user = useSelector((store) => store.session.user);
 
   const updateProduct = (e) => {
     e.preventDefault();
@@ -19,8 +20,6 @@ export const Product = ({product}) => {
     navigate(`/products/${product.id}`)
   }
 
-  console.log("hi")
-
   const handleDelete = async (e) => {
     e.preventDefault();
     await dispatch(deleteProductThunk(product))
@@ -31,8 +30,10 @@ export const Product = ({product}) => {
     <div className='product_card'>
       <img onClick={productPage} src={product.previewImage} alt={product.desc} />
       <p>${product.price}</p>
-      <button onClick={updateProduct}>Update</button>
-      <button onClick={handleDelete}>Delete</button>
+      {user !== null ? user.id === 1 ? <button onClick={handleDelete}>Delete</button> : null : null}
+      {user !== null ? user.id === 1 ? <button onClick={updateProduct}>Update</button> : null : null}
     </div>
   )
 }
+
+export default Product;
