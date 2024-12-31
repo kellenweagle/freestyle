@@ -8,7 +8,6 @@ import { deleteReviewThunk, getReviewsThunk } from '../../redux/review';
 
 export const Review = ({review}) => {
   const dispatch = useDispatch()
-  const navigate = useNavigate()
 
   const user = useSelector((store) => store.session.user);
 

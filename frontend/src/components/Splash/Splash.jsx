@@ -5,12 +5,15 @@ import { Product } from './Product';
 import { getProductsThunk } from '../../redux/product';
 import './Splash.css'
 import { getReviewsThunk } from '../../redux/review';
+import OpenModalButton from "../OpenModalButton/OpenModalButtton"
+import CreateReview from '../CreateReview/CreateReview';
 
 
 const Splash = () => {
   const dispatch = useDispatch();
   const productsState = useSelector((state) => state.productsState.products)
   const reviewsState = useSelector((state) => state.reviewState.reviews)
+  const sessionUser = useSelector((state) => state.session.user)
   console.log(productsState, "test")
 
   const [isLoaded, setIsLoaded] = useState(false);
@@ -42,6 +45,15 @@ const Splash = () => {
         </div>
         <div className='review_container'>
         <h2>FreeStyle Reviews</h2>
+        {!sessionUser ? null :
+        <div className='post-review-button' >
+        <OpenModalButton
+           buttonText={"Post your review"}
+           modalComponent={<CreateReview />}
+           preventDefault
+           stopPropagation
+           /> 
+       </div> }
           {reviewsState.length > 0 ? reviewsState.map((review) => (
             <div key={`${review.id}-${review.review}`}>
               <Review review={review}/>

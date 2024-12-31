@@ -61,8 +61,6 @@ router.delete('/:reviewId', requireAuth, async(req, res, next) => {
     const user = req.user
     const reviewToDelete = await Review.findByPk(id)
 
-    console.log("--------------------------", reviewToDelete)
-
     if(!reviewToDelete) {
       throw new CustomError("Review couldn't be found", 404)
     }

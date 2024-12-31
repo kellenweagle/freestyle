@@ -8,6 +8,7 @@ import PageNotFound from '../components/PageNotFound/PageNotFound';
 import CreateProductForm from '../components/CreateProductForm/CreateProductForm';
 import UpdateProduct from '../components/UpdateProduct/UpdateProduct';
 import ProductPage from '../components/ProductPage/ProductPage';
+import CreateReview from '../components/CreateReview/CreateReview';
 export const router = createBrowserRouter([
 
   {
@@ -36,6 +37,10 @@ export const router = createBrowserRouter([
       {
         path: "/products/:id/update",
         element: <UpdateProduct />,
+      },
+      {
+        path: "/reviews",
+        element: <CreateReview />
       },
       {
         path: '/*',
