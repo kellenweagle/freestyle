@@ -28,25 +28,54 @@ const validateSignup = [
     handleValidationErrors
 ];
 
-// Sign up
-router.post('/', validateSignup, async (req, res) => {
+router.post('/', validateSignup, async (req, res, next) => {
+    try {
+        const { email, password, username, firstName, lastName } = req.body;
 
-    const { email, password, username } = req.body;
+        // Check for missing fields
+        if (!email || !password || !username || !firstName || !lastName) {
+            return res.status(400).json({ message: "All fields are required." });
+        }
 
-    const hashedPassword = bcrypt.hashSync(password);
-    const user = await User.create({ email, username, hashedPassword });
+        // Check if the email already exists
+        const existingUser = await User.findOne({ where: { email } });
+        if (existingUser) {
+            return res.status(400).json({ email: "Email is already in use." });
+        }
 
-    const safeUser = {
-        id: user.id,
-        email: user.email,
-        username: user.username,
-    };
+        // Check if the username already exists
+        const existingUsername = await User.findOne({ where: { username } });
+        if (existingUsername) {
+            return res.status(400).json({ username: "Username is already taken." });
+        }
 
-    await setTokenCookie(res, safeUser);
+        // Hash password before storing
+        const hashedPassword = bcrypt.hashSync(password, 10);
 
-    return res.json({
-        user: safeUser
-    });
+        // Create the new user
+        const user = await User.create({ email, username, hashedPassword, firstName, lastName });
+
+        // Prepare the safe user object (omit sensitive info)
+        const safeUser = {
+            id: user.id,
+            email: user.email,
+            username: user.username,
+            firstName: user.firstName,
+            lastName: user.lastName,
+        };
+
+        // Set the token cookie for the session
+        await setTokenCookie(res, safeUser);
+
+        return res.status(201).json({ user: safeUser });
+
+    } catch (error) {
+        // Log the error for debugging
+        console.error("Error during signup:", error);
+
+        // Respond with a 500 status and a general error message
+        return res.status(500).json({ message: "Something went wrong. Please try again later." });
+    }
 });
 
 // Restore session user

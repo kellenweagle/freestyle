@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteProductThunk, getProductsThunk } from '../../redux/product'
 import { useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
 
 export const ProductPage = () => {
   const { id } = useParams()
@@ -11,6 +12,14 @@ export const ProductPage = () => {
   const user = useSelector((store) => store.session.user);
   const dispatch = useDispatch()
   const navigate = useNavigate()
+
+  useEffect(() => {
+    dispatch(getProductsThunk());
+  }, [id, dispatch]);
+
+  if (!product) {
+    return <div>Loading...</div>;
+  }
 
   const handleDelete = async (e) => {
       e.preventDefault();

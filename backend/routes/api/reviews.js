@@ -22,15 +22,9 @@ router.get('/', async(req, res, next) => {
   }
 })
 
-// create a review
-router.post('/', requireAuth, async(req, res, next) => {
+router.post('/', requireAuth, async (req, res, next) => {
   try {
-
-    const {
-      review,
-      stars
-    } = req.body;
-
+    const { review, stars } = req.body;
     const { user } = req;
 
     if (!user) {
@@ -44,12 +38,19 @@ router.post('/', requireAuth, async(req, res, next) => {
       stars
     });
 
+    const reviewWithUser = await Review.findByPk(newReview.id, {
+      include: {
+        model: User,
+        attributes: ["id", "firstName"],
+      },
+    });
 
-      return res.status(201).json(newReview);
-    } catch (e) {
+    return res.status(201).json(reviewWithUser);
+  } catch (e) {
     next(e);
   }
 });
+
 
 
 // delete a review 

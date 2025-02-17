@@ -88,18 +88,23 @@ export const deleteReviewThunk = (review) => async (dispatch) => {
 const initialState = { reviews: [], byId: {} };
 
 function reviewsReducer(state = initialState, action) {
-    let newState;
     switch (action.type) {
         case GET_REVIEWS:
-          newState = {...state}
-          newState.reviews = action.payload;
-          return newState;
+            return {
+                ...state,
+                reviews: action.payload,
+                byId: action.payload.reduce((acc, review) => {
+                    acc[review.id] = review;
+                    return acc;
+                }, {})
+            };
 
         case CREATE_REVIEWS: {
-          newState = { ...state };
-          newState.reviews = [action.payload, ...newState.reviews];
-          newState.byId[action.payload.id] = action.payload;
-          return newState; 
+            return { 
+                ...state, 
+                reviews: [action.payload, ...state.reviews], 
+                byId: { ...state.byId, [action.payload.id]: action.payload }
+            };
         }
 
         case DELETE_REVIEWS: {

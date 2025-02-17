@@ -1,4 +1,4 @@
-import { csrfFetch } from './csrf';
+import { csrfFetch } from './csrf.js';
 
 //Constants
 const SET_USER = 'session/setUser';
@@ -79,22 +79,27 @@ export const thunkLogin = (credentials) => async dispatch => {
 };
 
 export const thunkSignup = (user) => async (dispatch) => {
-    const response = await csrfFetch("/api/users", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(user)
-    });
+    try {
+        const response = await csrfFetch("/api/users", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(user),
+        });
 
-    if (response.ok) {
-        const data = await response.json();
-        dispatch(setUser(data));
-    } else if (response.status < 500) {
-        const errorMessages = await response.json();
-        return errorMessages
-    } else {
-        return { server: "Something went wrong. Please try again" }
+        if (response.ok) {
+            const data = await response.json();
+            dispatch(setUser(data)); 
+            return null; 
+        } else {
+            const errorMessages = await response.json();
+            return errorMessages;
+        }
+    } catch (error) {
+        console.error("Signup error:", error);
+        return { server: "Something went wrong. Please try again later." }; 
     }
 };
+
 
 export const thunkLogout = () => async (dispatch) => {
     await csrfFetch("/api/session", {

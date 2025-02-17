@@ -13,10 +13,10 @@ function Navigation() {
       <Logo />
       <div className="nav-right">
       {user !== null ? user.id === 1 ? <NavLink to="/products">Post New Product</NavLink> : null : null}
+        <div>
+          <ProfileButton />
+        </div>
         <ul>
-          <li>
-            <ProfileButton />
-          </li>
           {user && (
             <li>
               {user.profileImg?

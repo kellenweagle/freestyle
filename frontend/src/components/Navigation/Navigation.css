@@ -27,3 +27,8 @@ ul {
     margin: 0;
     padding: 0;
 }
+
+.nav-right {
+    display: flex;
+    justify-content: center;
+}

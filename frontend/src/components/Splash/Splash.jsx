@@ -45,7 +45,7 @@ const Splash = () => {
         </div>
         <div className='review_container'>
         <h2>FreeStyle Reviews</h2>
-        {!sessionUser ? null :
+        {!sessionUser || sessionUser.id === 1 ? null :
         <div className='post-review-button' >
         <OpenModalButton
            buttonText={"Post your review"}
