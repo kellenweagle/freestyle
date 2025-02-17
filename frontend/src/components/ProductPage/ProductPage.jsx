@@ -43,7 +43,7 @@ export const ProductPage = () => {
     <img src={product.image3} alt={product.desc} />
     <p>{product.desc}</p>
     <p>${product.price}</p>
-    {user !== null ? user.id === 1 ? <button onClick={handleDelete}>Delete</button> : null : null}
+    {user !== null ? user.id === 1 ? <button onClick={handleDelete}>Delete</button> : <button>Add to cart</button> : null}
     {user !== null ? user.id === 1 ? <button onClick={updateProduct}>Update</button> : null : null}
   </div>
   )
