@@ -32,3 +32,9 @@ ul {
     display: flex;
     justify-content: center;
 }
+
+.nav-left {
+    display: flex;
+    justify-content: center;
+    align-items: end;
+}

@@ -7,6 +7,7 @@ import './Splash.css'
 import { getReviewsThunk } from '../../redux/review';
 import OpenModalButton from "../OpenModalButton/OpenModalButtton"
 import CreateReview from '../CreateReview/CreateReview';
+import { NavLink } from 'react-router-dom';
 
 
 const Splash = () => {

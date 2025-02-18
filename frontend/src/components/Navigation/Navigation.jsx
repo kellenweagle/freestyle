@@ -10,7 +10,10 @@ function Navigation() {
 
   return (
     <div className="nav-container">
-      <Logo />
+      <div className="nav-left">
+        <Logo />
+        <NavLink to={'https://github.com/kellenweagle/freestyle/blob/main/README.md'}>About</NavLink>
+      </div>
       <div className="nav-right">
       {user !== null ? user.id === 1 ? <NavLink to="/products">Post New Product</NavLink> : null : null}
         <div>
