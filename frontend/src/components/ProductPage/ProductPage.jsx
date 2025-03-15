@@ -35,12 +35,14 @@ export const ProductPage = () => {
 
   console.log(product)
   return (
-    <div className='product_card'>
+    <div className='product-page'>
     <h1>{product.productName}</h1>
-    <img src={product.previewImage} alt={product.desc} />
-    <img src={product.image1} alt={product.desc} />
-    <img src={product.image2} alt={product.desc} />
-    <img src={product.image3} alt={product.desc} />
+    <div className='product-images'>
+     <img className='product-img' src={product.previewImage} alt={product.desc} />
+     <img className='product-img' src={product.image1} alt={product.desc} />
+     <img className='product-img' src={product.image2} alt={product.desc} />
+     <img className='product-img' src={product.image3} alt={product.desc} />
+    </div>
     <p>{product.desc}</p>
     <p>${product.price}</p>
     {user !== null ? user.id === 1 ? <button onClick={handleDelete}>Delete</button> : <button>Add to cart</button> : null}

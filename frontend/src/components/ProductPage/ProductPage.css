@@ -1,0 +1,17 @@
+.product-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center horizontally */
+  text-align: center;
+  padding: 20px;
+  margin-top: 20px; /* Adds some space from the top */
+}
+
+.product-images {
+  display: flex;
+  flex-direction: column;
+}
+
+.product-img {
+  margin-bottom: .5rem
+}
